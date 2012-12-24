@@ -1,4 +1,3 @@
-require! fs
 require! TextAnalyzer:'./text-analyzer'
 require! Caesar:'../ciphers/caesar'
 
