@@ -28,7 +28,4 @@ module.exports = class TextAnalyzer
 		{[k, v / s] for k, v of counter}
 
 	deviation: (langOcc, textOcc) ~~>
-		dev = 0
-		for k, v of langOcc
-			dev += abs (textOcc[k] or 0 - v)
-		1000 / dev
+		1000 / sum [abs ((textOcc[k] or 0) - v) for k, v of langOcc]
