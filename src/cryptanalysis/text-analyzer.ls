@@ -9,8 +9,10 @@ module.exports = class TextAnalyzer
 
 
 	similarity: (text) ~> 
-		(@ngramsCounter text, 1 |> @deviation @stats.letters) +
-		(@ngramsCounter text, 2 |> @deviation @stats.bigrams)
+		(@simIndex text, 1, @stats.letters) + (@simIndex text, 2, @stats.bigrams)
+
+	simIndex: (text, n, stats) ~>
+		@ngramsCounter text, n |> @deviation stats |> (1000/) |> (/n)
 
 	splitText: (text, n) ~>
 		[text.substring i, i+n for i in [to text.length - 1 by n]]
@@ -28,4 +30,4 @@ module.exports = class TextAnalyzer
 		{[k, v / s] for k, v of counter}
 
 	deviation: (langOcc, textOcc) ~~>
-		1000 / sum [abs ((textOcc[k] or 0) - v) for k, v of langOcc]
+		sum [abs ((textOcc[k] or 0) - v) for k, v of langOcc]
