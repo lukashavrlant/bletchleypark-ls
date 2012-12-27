@@ -1,15 +1,14 @@
-require! TextAnalyzer:'../cryptanalysis/text-analyzer'
-require! Caesar:'../ciphers/caesar'
-normalize = require('../utils/string').normalizeString
-require! '../utils/set'
+require! ['../ciphers/caesar', '../utils/set']
 combinations = require('../utils/combinatorics').combinations
 
 module.exports = class CaesarTriangle
-	caesar = new Caesar
+	cipher = new caesar
 	letters = \abcdefghijklmnopqrstuvwxyz
 
 	crack: (analyzer, cipherText) ~>
-		[least, top] = @candidateKeys analyzer, cipherText
+		@chooseKey @candidateKeys analyzer, cipherText
+
+	chooseKey: ([least, top]) ~>
 		inter = set.intersection least, top
 		if empty inter
 			union = set.union least, top
@@ -39,4 +38,4 @@ module.exports = class CaesarTriangle
 
 	determineKey: (langLetters, comb) ~>
 		comb = sort comb.split ''
-		find (~> (caesar.encrypt langLetters, it |> sort) === comb), letters
+		find (~> (cipher.encrypt langLetters, it |> sort) === comb), letters
