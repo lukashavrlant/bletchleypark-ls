@@ -36,3 +36,6 @@ eq 0.4 analyzer.deviation langStats.letters, { a: 0.4, c: 0.3, b: 0.2, d: 0.1 }
 eq 3272 round analyzer.similarity 'abcbbceed'
 
 eq \a analyzer.mostMeaningful {a:'abababac', b:'decdedea', c:'bedeacde'}
+
+deepEq [\a \c] analyzer.topLetters {a:5, b:3, c:4, d:2}, 2
+deepEq [\a \b \c] analyzer.topLetters {a:5, b:5, c:4, d:2}, 3

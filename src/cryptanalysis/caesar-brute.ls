@@ -5,5 +5,5 @@ module.exports = class CaesarBrute
 	letters = \abcdefghijklmnopqrstuvwxyz
 	caesar = new Caesar
 
-	crack: (cipherText, analyzer) ~~>
+	crack: (analyzer, cipherText) ~~>
 		analyzer.mostMeaningful {[lett, caesar.decrypt cipherText, lett] for lett in letters}

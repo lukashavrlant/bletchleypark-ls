@@ -4,6 +4,8 @@ module.exports = class TextAnalyzer
 	(jsonData) ~> 
 		@stats = jsonData
 
+	letters = \abcdefghijklmnopqrstuvwxyz
+
 	mostMeaningful: (texts) ~>
 		[[key, @similarity text] for key, text of texts] |> sortBy (compare last) |> last |> head
 
@@ -21,13 +23,25 @@ module.exports = class TextAnalyzer
 		@splitText text, n |> @counter |> @occurences 
 
 	counter: (list) ~>
-		count = {}
-		each (~> count[it]++ or count[it] = 1), list
+		count = {[k, 0] for k in letters}
+		each (~> count[it]++), list
 		count
 
 	occurences: (counter) ~>
 		s = sum values counter
 		{[k, v / s] for k, v of counter}
+
+	topLetters: (counter, n) ~>
+		@leastLetters {[k, -v] for k, v of counter}, n
+
+	leastLetters: (counter, n) ~>
+		sortBy (compare last), [[k, v] for k, v of counter] |> take n |> map head
+
+	topLangLetters: (n) ~>
+		@topLetters @stats.letters, n
+
+	leastLangLetters: (n) ~>
+		@leastLetters @stats.letters, n
 
 	deviation: (langOcc, textOcc) ~~>
 		sum [abs ((textOcc[k] or 0) - v) for k, v of langOcc]
