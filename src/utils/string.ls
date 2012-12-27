@@ -98,5 +98,3 @@ normalizeString = (str) ~>
 
 module.exports.removeDiacritics = removeDiacritics
 module.exports.normalizeString = normalizeString
-
-normalizeString ''
