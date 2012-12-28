@@ -1,6 +1,6 @@
 module.exports = class Transposition
 	encrypt: (openText, key) ~>
-		splitted = @splitText key.length, openText 
+		splitted = (@splitText key.length, openText) |> @addX key.length, _
 		@joinText map (~> @switchLetters it, @pattern key), splitted
 
 	decrypt: (cipherText, key) ~>
@@ -10,9 +10,11 @@ module.exports = class Transposition
 	splitDecText: (keylen, text) ~>
 		@splitText keylen, (@splitText text.length / keylen, text |> @joinText)
 
-	splitText: (len, text) ~> 
-		| text.length <= len  => [text + 'x' * (len - text.length)]
-		| _ => [A, B] = splitAt len, text; [A] +++ @splitText len, B
+	splitText: (len, text) ~>
+		[til text.length by len] |> map (~> text.substr it, len)
+
+	addX: (len, [...first, last]) ~>
+		first +++ last + 'x' * (len - last.length)
 
 	joinText: (texts) ~>
 		| texts.length == 0 or texts[0] == '' => ''
