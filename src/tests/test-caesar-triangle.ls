@@ -10,5 +10,4 @@ langStats = {'letters' : {
 analyzer = new textAnalyzer langStats
 triangle = new caesarTriangle
 
-
 eq \f triangle.crack analyzer, cipherText

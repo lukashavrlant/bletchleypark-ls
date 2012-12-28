@@ -1,11 +1,9 @@
-require! './unittest'
-require! [fs, path]
-require! CaesarBrute:'../cryptanalysis/caesar-brute'
-require! TextAnalyzer:'../cryptanalysis/text-analyzer'
+require! ['./unittest', fs, '../cryptanalysis/caesar-brute', '../cryptanalysis/text-analyzer']
 
 langStats = fs.readFileSync "#__dirname/../../data/cs/stats.json" |> JSON.parse
-analyzer = new TextAnalyzer langStats
-brute = new CaesarBrute
+analyzer = new textAnalyzer langStats
+brute = new caesarBrute
 
-eq \x brute.crack analyzer, \pqlgfjsbpqfkrpbabpqbkvkxwaibzemlsbpqkvzepjoqfwoxazrqxavqbahlkzfmlpibakfholhvalpmfkvpqlmbkvzegbelsfpqr
-eq \q brute.crack analyzer, \aqptofejhurkzuijhecetaeburaofehqauln
+cipherText = \sjefanxqduwjenijsyxpdpfsinifyofsknxhmjwajhyawyjpatknhnfqsnruwtmqfxjsnwjfltafqsffujqmjwhjytrfxjmfsfpfpyjwdojoadeafqfgdxjofptgdafqdhqjspxhsjzhmfejqauwnrjatqgjtutxymqfadxyfyzknxhmjweizwfesnqejrfstrnsfhntitghfszfefxjgtzptspwjysnadxqjipduwfhjaeifypfsinifyzwdxjsjmtiqfnuwtytejgdzatqsnqhjxyzuthmdgsdruwfpynpfrpyjwjxutozojxjwtzsjpijoxnmtuwjrnjwfrnqtxjejrfsf
+
+eq \f brute.crack analyzer, cipherText
