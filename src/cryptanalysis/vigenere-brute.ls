@@ -6,7 +6,7 @@ module.exports = class VigenereBrute
 	caesarCracker = (new caesarTriangle).crack
 
 	crack: (analyzer, cipherText) ~>
-		res = [2 to maxKeyLen] 
+		[2 to maxKeyLen] 
 		|> map (~> concatMap (caesarCracker analyzer, _), @splitText cipherText, it)
 		|> map (~> [it, vigDecrypt cipherText, it])
 		|> listToObj 
