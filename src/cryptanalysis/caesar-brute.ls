@@ -1,8 +1,7 @@
-require! TextAnalyzer:'./text-analyzer'
 require! Caesar:'../ciphers/caesar'
+require! '../utils/string'.letters
 
 module.exports = class CaesarBrute
-	letters = \abcdefghijklmnopqrstuvwxyz
 	caesar = new Caesar
 
 	crack: (analyzer, cipherText) ~~>

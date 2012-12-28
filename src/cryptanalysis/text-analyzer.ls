@@ -1,14 +1,11 @@
-require! fs
+require! '../utils/string'.letters
 
 module.exports = class TextAnalyzer
-	(jsonData) ~> 
-		@stats = jsonData
-
-	letters = \abcdefghijklmnopqrstuvwxyz
+	(jsonDataStats) ~> 
+		@stats = jsonDataStats
 
 	mostMeaningful: (texts) ~>
 		[[key, @similarity text] for key, text of texts] |> sortBy (compare last) |> last |> head
-
 
 	similarity: (text) ~> 
 		(@simIndex text, 1, @stats.letters) + (@simIndex text, 2, @stats.bigrams)

@@ -1,9 +1,9 @@
 require! ['../ciphers/caesar', '../utils/set']
-combinations = require('../utils/combinatorics').combinations
+require! '../utils/combinatorics'.combinations
+require! '../utils/string'.letters
 
 module.exports = class CaesarTriangle
 	cipher = new caesar
-	letters = \abcdefghijklmnopqrstuvwxyz
 
 	crack: (analyzer, cipherText) ~>
 		@chooseKey @candidateKeys analyzer, cipherText

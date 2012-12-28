@@ -1,12 +1,13 @@
-require! substitution: "./substitution"
+require! "./substitution"
+require! '../utils/string'.letters
 
 module.exports = class Caesar
-	letters = 'abcdefghijklmnopqrstuvwxyz'
+	subs = new substitution
 	encrypt: (openText, key) ~>
-		(new substitution).encrypt openText, @makeSubsKey key
+		subs.encrypt openText, @makeSubsKey key
 
 	decrypt: (cipherText, key) ~>
-		(new substitution).decrypt cipherText, @makeSubsKey key
+		subs.decrypt cipherText, @makeSubsKey key
 
 	makeSubsKey: (key) ~>
 		letters |> breakIt (== key) |> reverse |> join ''

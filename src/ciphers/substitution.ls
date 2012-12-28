@@ -1,5 +1,6 @@
+require! '../utils/string'.letters
+
 module.exports = class Substitution
-	letters = 'abcdefghijklmnopqrstuvwxyz'
 	encrypt: (openText, key) ~> 
 		subs = listToObj zip letters, key
 		map (subs.), openText
