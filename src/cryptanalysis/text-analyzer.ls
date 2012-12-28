@@ -5,7 +5,8 @@ module.exports = class TextAnalyzer
 		@stats = jsonDataStats
 
 	mostMeaningful: (texts) ~>
-		[[key, @similarity text] for key, text of texts] |> sortBy (compare last) |> last |> head
+		[[key, (@similarity text) - (key.length / 100000)] for key, text of texts] 
+		|> sortBy (compare last) |> last |> head
 
 	similarity: (text) ~> 
 		(@simIndex text, 1, @stats.letters) + (@simIndex text, 2, @stats.bigrams)
