@@ -1,0 +1,9 @@
+require! ['./unittest', fs, '../cryptanalysis/vigenere-brute', '../cryptanalysis/text-analyzer']
+
+cipherText = \rvaggwyrdrpmxkwiqcpztbsiyicqxempkuicpcwfzievsmgtjeqmkhfewiegmgwcreyeqxamyvkuissrsbrsszsqerjjmqtszrvrpiskwztsmumcxshpsyowypseghtlknyxpfuhtmprkrvvtrcggxfbhrvvtgcfzrtjbqapjqqgegmltvioqvaygrfgwyuzneccxcovrrfhjeqagotcmmjvfmmwowyvxbqyimizgpjemmtmhzhnjefemmgfnamgkwjgzvyqdbcagwyvzxazuicqqirbtryesziwkwycqwkxfbhqxeavuhymovlrthfewiettgtnzrnbxeotnmigteeuznbmiicukltrsqedoumakotdcxjymlxntepjtvbsazkrvswrvhzepppbjsxkiakdfuiessyrsmkxjepykewxczkrydmzugsvlbpqjtgxrsfbbvbmxkczffdminxkzdmaztwpvrpzjkavnsprtvhvzbwyunfbwqutwrdaotwfagxiivswktwpmxuptxqpqisvhnzielrrtexvxeuwyimqonfbwgglqlkvimfmgsaotmmcrcspkuxpntqnaxfkixtiorsguqzjsbxsajqpnrnmmeoqjgzvzsram
+
+langStats = fs.readFileSync "#__dirname/../../data/cs/stats.json" |> JSON.parse
+analyzer = new textAnalyzer langStats
+vig = new vigenereBrute 
+vig.maxKeyLen = 7
+eq \fringe vig.crack analyzer, cipherText

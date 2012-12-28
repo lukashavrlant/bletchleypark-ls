@@ -38,4 +38,4 @@ module.exports = class CaesarTriangle
 
 	determineKey: (langLetters, comb) ~>
 		comb = sort comb.split ''
-		find (~> (cipher.encrypt langLetters, it |> sort) === comb), letters
+		(find (~> (cipher.encrypt langLetters, it |> sort) === comb), letters) or '?'
