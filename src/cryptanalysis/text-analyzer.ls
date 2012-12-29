@@ -1,15 +1,20 @@
 require! '../utils/string'.letters
+require! fs
 
 module.exports = class TextAnalyzer
 	(jsonDataStats) ~> 
 		@stats = jsonDataStats
+
+	wordsDir = '../../data/cs/words/'
 
 	mostMeaningful: (texts) ~>
 		[[key, (@similarity text) - (key.length / 100000)] for key, text of texts] 
 		|> sortBy (compare last) |> last |> head
 
 	similarity: (text) ~> 
-		(@simIndex text, 1, @stats.letters) + (@simIndex text, 2, @stats.bigrams)
+		res = (@simIndex text, 1, @stats.letters) + (@simIndex text, 2, @stats.bigrams)
+		wordsCount = 10 + @topWordsCount text
+		res * (wordsCount / 10)
 
 	simIndex: (text, n, stats) ~>
 		@ngramsCounter text, n |> @deviation stats |> (1000/) |> (/n)
@@ -43,3 +48,14 @@ module.exports = class TextAnalyzer
 
 	deviation: (langOcc, textOcc) ~~>
 		sum [abs ((textOcc[k] or 0) - v) for k, v of langOcc]
+
+	words: (len) ~>
+		fs.readFileSync "#wordsDir#len.dic" |> (.toString!) |> words
+
+	topWordsCount: (text) ~> 
+		map (@containsWord text, _), @stats.topwords |> sum
+
+	containsWord: (text, word) ~~>
+		[to text.length - word.length]
+		|> map ((x) ~> if (text.substring x, x + word.length) == word then 1 else 0)
+		|> sum

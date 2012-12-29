@@ -32,9 +32,11 @@ deepEq {a:0.5, b:0.25, c:0.25} analyzer.occurences {a:2, b:1, c:1}
 
 eq 0.4 analyzer.deviation langStats.letters, { a: 0.4, c: 0.3, b: 0.2, d: 0.1 }
 
-eq 3147 round analyzer.similarity 'abcbbceed'
+eq 3462 round analyzer.similarity 'abcbbceed'
 
 eq \a analyzer.mostMeaningful {a:'abababac', b:'decdedea', c:'bedeacde'}
 
 deepEq [\a \c] analyzer.topLetters {a:5, b:3, c:4, d:2}, 2
 deepEq [\a \b \c] analyzer.topLetters {a:5, b:5, c:4, d:2}, 3
+
+deepEq [ 'a', 'v', 's', 'z', 'o', 'i', 'k', 'u', 'c', 'g', 'm', 'p', 'e', 'd', 'b', 'x', 'r', 'h', 'j', 't', 'n', 'l', 'w', 'y', 'f', 'q' ], analyzer.words 1
