@@ -17,7 +17,7 @@ module.exports = class TranspositionLong
 		keys = []
 		for keylen in @keyLengths cipherText
 			lenWords = analyzer.words keylen
-			for cipherWord in transposition.splitDecText keylen, cipherText |> take 10
+			for cipherWord in transposition.splitDecText keylen, cipherText |> take 50
 				langWords = filter (@matchCounter _, @counter cipherWord), lenWords
 				keys = keys +++ concat map (~> @candidateKeys it, @positions cipherWord), langWords
 		unique keys
